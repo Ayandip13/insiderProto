@@ -2,7 +2,7 @@ import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import Color from "../components/constants/Color.js";
 
-const CategoryList = () => {
+const CategoryList = ({ active, setActive }) => {
   const categoryList = [
     { id: 1, name: "Latest" },
     { id: 2, name: "World" },
@@ -11,7 +11,7 @@ const CategoryList = () => {
     { id: 5, name: "Movie" },
   ];
 
-  const [active, setActive] = useState(); // Set default category
+  // console.log(active);
 
   return (
     <View style={{ marginLeft: 22 }}>

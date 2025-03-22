@@ -2,10 +2,23 @@ import { Drawer } from "expo-router/drawer";
 
 export default function RootLayout() {
   return (
-    <Drawer>
+    <Drawer
+      initialRouteName="Home/index"
+      screenOptions={{
+        headerShown: false, // Hide the default header
+      }}
+    >
       <Drawer.Screen
-        name="index"
-        options={{ drawerLabel: "Home", title: "Home" }}
+        name="Home/index"
+        options={{
+          drawerLabel: "Home",
+        }}
+      />
+      <Drawer.Screen
+        name="Others/index"
+        options={{
+          drawerLabel: "Others",
+        }}
       />
     </Drawer>
   );

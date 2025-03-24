@@ -7,14 +7,16 @@ const CategoryList = ({ active, setActive }) => {
     { id: 1, name: "Latest" },
     { id: 2, name: "World" },
     { id: 3, name: "Business" },
-    { id: 4, name: "Life" },
+    { id: 4, name: "Football" },
     { id: 5, name: "Movie" },
+    { id: 6, name: "Geopolitics" },
+    { id: 7, name: "Health" },
   ];
 
   // console.log(active);
 
   return (
-    <View style={{ marginLeft: 22 }}>
+    <View style={{ marginLeft: 22, marginRight:22 }}>
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal
@@ -30,6 +32,7 @@ const CategoryList = ({ active, setActive }) => {
                   fontWeight: "800",
                   marginTop: 10,
                   marginHorizontal: 12,
+                  marginBottom: 40,
                 }}
               >
                 {item.name}

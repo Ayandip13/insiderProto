@@ -15,9 +15,9 @@ export default function RootLayout() {
         }}
       />
       <Drawer.Screen
-        name="Others/index"
+        name="Saved/index"
         options={{
-          drawerLabel: "Others",
+          drawerLabel: "Saved",
         }}
       />
     </Drawer>

@@ -10,30 +10,34 @@ import {
 import React, { useState } from "react";
 import Color from "./constants/Color";
 import { Ionicons } from "@expo/vector-icons";
+import Modal from "react-native-modal";
 
 const { height } = Dimensions.get("window"); // Get screen height
 
 const Cards = ({ activeCategory = [] }) => {
-  const [save, setSave] = useState(false);
+  const [openModals, setOpenModals] = useState({}); // Store modal states
+
+  const toggleModal = (index) => {
+    setOpenModals((prev) => ({ ...prev, [index]: !prev[index] })); //
+  };
 
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         data={activeCategory}
         keyExtractor={(item, index) => item?.title || index.toString()}
-        pagingEnabled // Ensures only one card shows at a time
-        snapToAlignment="end" // Ensures snapping to each card
-        snapToInterval={height} // Each card will take up full screen height
-        decelerationRate="fast" // Smooth scrolling effect
-        // contentContainerStyle={{ paddingBottom: height }} // Prevents extra spacing at the bottom
+        pagingEnabled
+        snapToAlignment="end"
+        snapToInterval={height}
+        decelerationRate="fast"
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => {
+        renderItem={({ item, index }) => {
           if (!item.urlToImage) return null;
 
           return (
             <View
               style={{
-                height, // Full screen height
+                height,
                 width: "100%",
                 backgroundColor: "#fff",
                 alignItems: "center",
@@ -44,7 +48,6 @@ const Cards = ({ activeCategory = [] }) => {
                 <Image
                   style={{ height: 220, width: 320, borderRadius: 10 }}
                   source={{ uri: item.urlToImage }}
-                  // resizeMode="cover"
                 />
               </View>
               <Text
@@ -69,24 +72,54 @@ const Cards = ({ activeCategory = [] }) => {
                 {item?.description}
               </Text>
 
-              <View style={{ flexDirection: "row" }}>
-                <TouchableOpacity
-                  style={{ top: 105, left: 105 }}
-                  onPress={() => Linking.openURL(item?.url)}
-                >
-                  <Text style={{ color: Color.primary, fontSize: 24 }}>
-                    Read More
+              {/* Read More & Bookmark */}
+              <View
+                style={{
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: 320,
+                  marginTop: 20,
+                }}
+              >
+                {/* Read More */}
+                <TouchableOpacity onPress={() => Linking.openURL(item?.url)}>
+                  <Text style={{ color: Color.primary, fontSize: 22 }}>
+                    Read More...
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setSave((prev) => !prev)}>
-                  <Ionicons
-                    style={{ top: 97, right: 165 }}
-                    name={save ? "bookmark-sharp" : "bookmark-outline"}
-                    size={30}
-                    color={Color.gray}
-                  />
+
+                {/* Bookmark */}
+                <TouchableOpacity onPress={() => toggleModal(index)}>
+                  <Ionicons name="bookmark" size={30} color={Color.blue} />
                 </TouchableOpacity>
               </View>
+
+              {/* Modal */}
+              <Modal
+                isVisible={openModals[index]}
+                onBackdropPress={() => toggleModal(index)}
+              >
+                <View
+                  style={{
+                    padding: 20,
+                    backgroundColor: Color.lightestGray,
+                    borderTopStartRadius: 10,
+                    borderTopEndRadius: 10,
+                    alignItems: "center",
+                    marginTop:660,
+                    height:200
+                  }}
+                >
+                  <Text>Opened!</Text>
+                  <TouchableOpacity
+                    onPress={() => toggleModal(index)}
+                    style={{ backgroundColor: Color.lightGray, padding: 10, borderRadius:5, marginTop:70, marginLeft:240 }}
+                  >
+                    <Text>Close</Text>
+                  </TouchableOpacity>
+                </View>
+              </Modal>
             </View>
           );
         }}

@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import Color from "./constants/Color";
 import { Ionicons } from "@expo/vector-icons";
 import Modal from "react-native-modal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { height } = Dimensions.get("window"); // Get screen height
 
@@ -19,6 +20,15 @@ const Cards = ({ activeCategory = [] }) => {
 
   const toggleModal = (index) => {
     setOpenModals((prev) => ({ ...prev, [index]: !prev[index] })); //
+  };
+
+  const storeData = async (item) => {
+    try {
+      await AsyncStorage.setItem("storedItem", JSON.stringify(item));
+      console.log("Data stored in localstorage");
+    } catch (error) {
+      console.log("Data haven't stored in localstorage");
+    }
   };
 
   return (
@@ -60,6 +70,14 @@ const Cards = ({ activeCategory = [] }) => {
               >
                 {item?.title}
               </Text>
+              <View
+                style={{
+                  height: 0.5,
+                  backgroundColor: Color.blue,
+                  width: 200,
+                  marginTop: 10,
+                }}
+              />
               <Text
                 style={{
                   paddingTop: 10,
@@ -90,7 +108,11 @@ const Cards = ({ activeCategory = [] }) => {
                 </TouchableOpacity>
 
                 {/* Bookmark */}
-                <TouchableOpacity onPress={() => toggleModal(index)}>
+                <TouchableOpacity
+                  onPress={() => {
+                    toggleModal(index), storeData(item);
+                  }}
+                >
                   <Ionicons name="bookmark" size={30} color={Color.blue} />
                 </TouchableOpacity>
               </View>
@@ -107,14 +129,20 @@ const Cards = ({ activeCategory = [] }) => {
                     borderTopStartRadius: 10,
                     borderTopEndRadius: 10,
                     alignItems: "center",
-                    marginTop:660,
-                    height:200
+                    marginTop: 660,
+                    height: 200,
                   }}
                 >
-                  <Text>Opened!</Text>
+                  <Text>Saved!</Text>
                   <TouchableOpacity
                     onPress={() => toggleModal(index)}
-                    style={{ backgroundColor: Color.lightGray, padding: 10, borderRadius:5, marginTop:70, marginLeft:240 }}
+                    style={{
+                      backgroundColor: Color.lightGray,
+                      padding: 10,
+                      borderRadius: 5,
+                      marginTop: 55,
+                      marginLeft: 230,
+                    }}
                   >
                     <Text>Close</Text>
                   </TouchableOpacity>

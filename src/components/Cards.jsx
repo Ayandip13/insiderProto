@@ -10,17 +10,25 @@ import {
 import React, { useState } from "react";
 import Color from "./constants/Color";
 import { Ionicons } from "@expo/vector-icons";
-import Modal from "react-native-modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 const { height } = Dimensions.get("window"); // Get screen height
 
 const Cards = ({ activeCategory = [] }) => {
   const [openModals, setOpenModals] = useState({}); // Store modal states
 
-  const toggleModal = (index) => {
-    setOpenModals((prev) => ({ ...prev, [index]: !prev[index] })); //
+  const toastMessageHandle = () => {
+    Toast.show({
+      type: "success",
+      text1: "Saved!",
+      position: "bottom",
+    });
   };
+
+  // const toggleModal = (index) => {
+  //   setOpenModals((prev) => ({ ...prev, [index]: !prev[index] })); //
+  // };
 
   const storeData = async (item) => {
     try {
@@ -110,44 +118,13 @@ const Cards = ({ activeCategory = [] }) => {
                 {/* Bookmark */}
                 <TouchableOpacity
                   onPress={() => {
-                    toggleModal(index), storeData(item);
+                    toastMessageHandle();
+                    storeData(item);
                   }}
                 >
                   <Ionicons name="bookmark" size={30} color={Color.blue} />
                 </TouchableOpacity>
               </View>
-
-              {/* Modal */}
-              <Modal
-                isVisible={openModals[index]}
-                onBackdropPress={() => toggleModal(index)}
-              >
-                <View
-                  style={{
-                    padding: 20,
-                    backgroundColor: Color.lightestGray,
-                    borderTopStartRadius: 10,
-                    borderTopEndRadius: 10,
-                    alignItems: "center",
-                    marginTop: 660,
-                    height: 200,
-                  }}
-                >
-                  <Text>Saved!</Text>
-                  <TouchableOpacity
-                    onPress={() => toggleModal(index)}
-                    style={{
-                      backgroundColor: Color.lightGray,
-                      padding: 10,
-                      borderRadius: 5,
-                      marginTop: 55,
-                      marginLeft: 230,
-                    }}
-                  >
-                    <Text>Close</Text>
-                  </TouchableOpacity>
-                </View>
-              </Modal>
             </View>
           );
         }}

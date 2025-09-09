@@ -12,23 +12,26 @@ import Color from "./constants/Color";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
+import { useRouter } from "expo-router";
 
-const { height } = Dimensions.get("window"); // Get screen height
+const { height } = Dimensions.get("window");
 
 const Cards = ({ activeCategory = [] }) => {
-  const [openModals, setOpenModals] = useState({}); // Store modal states
+
+  const router = useRouter()
 
   const toastMessageHandle = () => {
     Toast.show({
       type: "success",
       text1: "Saved!",
       position: "bottom",
+      visibilityTime: 5000,
+      autoHide: true,
+      swipeable: true,
+      topOffset: 70,
+      bottomOffset: 60,
     });
   };
-
-  // const toggleModal = (index) => {
-  //   setOpenModals((prev) => ({ ...prev, [index]: !prev[index] })); //
-  // };
 
   const storeData = async (item) => {
     try {
@@ -57,7 +60,7 @@ const Cards = ({ activeCategory = [] }) => {
               style={{
                 height,
                 width: "100%",
-                backgroundColor: "#fff",
+                backgroundColor: Color.light,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -98,7 +101,6 @@ const Cards = ({ activeCategory = [] }) => {
                 {item?.description}
               </Text>
 
-              {/* Read More & Bookmark */}
               <View
                 style={{
                   flexDirection: "row-reverse",
@@ -108,14 +110,12 @@ const Cards = ({ activeCategory = [] }) => {
                   marginTop: 20,
                 }}
               >
-                {/* Read More */}
                 <TouchableOpacity onPress={() => Linking.openURL(item?.url)}>
                   <Text style={{ color: Color.primary, fontSize: 22 }}>
                     Read More...
                   </Text>
                 </TouchableOpacity>
 
-                {/* Bookmark */}
                 <TouchableOpacity
                   onPress={() => {
                     toastMessageHandle();

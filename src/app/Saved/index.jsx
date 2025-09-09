@@ -30,7 +30,7 @@ const Index = () => {
         backgroundColor: "#fff",
         alignItems: "center",
         paddingTop: 20,
-      }}
+      }}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
     >
       <View
         style={{
@@ -40,10 +40,9 @@ const Index = () => {
           borderRadius: 10,
           borderColor: "#C4D9FF",
           borderWidth: 0.8,
-          elevation: 3, // Adds a shadow effect
+          elevation: 3,
         }}
       >
-        {/* Image Section */}
         <View style={{ alignItems: "center", marginBottom: 10 }}>
           {retrivedItem?.urlToImage ? (
             <Image
@@ -60,7 +59,6 @@ const Index = () => {
           )}
         </View>
 
-        {/* Author Section */}
         <Text
           style={{
             fontSize: 14,

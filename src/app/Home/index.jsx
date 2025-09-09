@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import CategoryList from "../../components/CategoryList.jsx";
 import Cards from "../../components/Cards.jsx";
 import Header from "../../components/Header.jsx";
+import Color from "../../components/constants/Color.js";
 
 const HomePage = () => {
   const [active, setActive] = useState({ id: 1, name: "Latest" });
@@ -31,7 +32,7 @@ const HomePage = () => {
   }, [active]);
 
   return (
-    <View style={{ backgroundColor: "#fff", flex: 1 }}>
+    <View style={{ backgroundColor: Color.light, flex: 1 }}>
       <Header />
       <CategoryList active={active} setActive={setActive} />
       <Cards activeCategory={newsData} />

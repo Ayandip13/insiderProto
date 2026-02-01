@@ -1,9 +1,10 @@
 import { Drawer } from "expo-router/drawer";
 import Toast from "react-native-toast-message";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
   return (
-    <>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer
         initialRouteName="Home/index"
         screenOptions={{
@@ -24,6 +25,6 @@ export default function RootLayout() {
         />
       </Drawer>
       <Toast />
-    </>
+    </GestureHandlerRootView>
   );
 }

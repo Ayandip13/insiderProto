@@ -35,10 +35,23 @@ const Cards = ({ activeCategory = [] }) => {
 
   const storeData = async (item) => {
     try {
-      await AsyncStorage.setItem("storedItem", JSON.stringify(item));
-      console.log("Data stored in localstorage");
+      const existingData = await AsyncStorage.getItem("storedItem");
+      console.log("Existing data before save:", existingData);
+      const parsedData = existingData ? JSON.parse(existingData) : [];
+      console.log("Parsed existing data:", parsedData);
+
+      const updatedData = [...parsedData, item];
+      console.log("Updated data to save:", updatedData);
+      console.log("Total items:", updatedData.length);
+
+      await AsyncStorage.setItem(
+        "storedItem",
+        JSON.stringify(updatedData)
+      );
+
+      console.log("Data stored successfully - Total items:", updatedData.length);
     } catch (error) {
-      console.log("Data haven't stored in localstorage");
+      console.error("Storage error:", error);
     }
   };
 

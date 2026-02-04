@@ -11,7 +11,7 @@ const Header = () => {
         justifyContent: "space-between",
         alignItems: "center",
         marginHorizontal: 20,
-        marginTop: 20,
+        marginTop: 40,
       }}
     >
       <StatusBar barStyle={"dark-content"} backgroundColor={'transparent'} />

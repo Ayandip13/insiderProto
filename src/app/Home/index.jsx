@@ -47,9 +47,21 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollVi
 import { useRouter } from "expo-router";
 
 const COLORS = {
-  primary: "#2ED3B7",
+  // primary: "#DC2626",
+  // accent: "#991B1B",
+  // background: "#FEF2F2"
+
+  // primary: "#EAB308",
+  // accent: "#A16207",
+  // background: "#FEFCE8"
+
+  // primary: "#F59E0B",
+  // accent: "#B45309",
+  // background: "#FFFBEB"
+
+  primary: "#00B8B8",
+  accent: "#008080",
   background: "#F7F9F6",
-  accent: "#0F766E",
 
   // primary: "#A78BFA",
   // background: "#FAFAFF",
@@ -98,6 +110,16 @@ export default function App() {
 
       <ScrollView showsVerticalScrollIndicator={false}>
 
+        {/* HERO BANNER */}
+        <View style={styles.hero}>
+          <Text style={styles.heroTitle}>Discover Your Next Book</Text>
+          <Text style={styles.heroSub}>Trending reads curated for you</Text>
+
+          <TouchableOpacity style={styles.heroBtn}>
+            <Text style={styles.heroBtnText}>Explore Now</Text>
+          </TouchableOpacity>
+        </View>
+
         {/* CATEGORIES */}
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.catRow}>
           {categories.map((cat) => (
@@ -112,7 +134,20 @@ export default function App() {
           <Text style={styles.promoText}>🔥 Flat 30% off on Bestsellers</Text>
         </View>
 
-        {/* PRODUCTS */}
+        {/* FEATURED BOOKS (HORIZONTAL) */}
+        <Text style={styles.sectionTitle}>Featured</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: 10 }}>
+          {books.map((item) => (
+            <View key={item.id} style={styles.featureCard}>
+              <View style={styles.fakeImage} />
+              <Text style={styles.bookTitle}>{item.title}</Text>
+              <Text style={styles.price}>{item.price}</Text>
+            </View>
+          ))}
+        </ScrollView>
+
+        {/* GRID PRODUCTS */}
+        <Text style={styles.sectionTitle}>All Books</Text>
         <FlatList
           data={books}
           numColumns={2}
@@ -126,19 +161,27 @@ export default function App() {
               <Text style={styles.bookTitle}>{item.title}</Text>
               <Text style={styles.price}>{item.price}</Text>
 
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity onPress={() => router.push("/Saved")} style={styles.button}>
                 <Text style={styles.buttonText}>Add to Cart</Text>
               </TouchableOpacity>
             </View>
           )}
         />
 
-        <TouchableOpacity
-          style={[styles.button, { margin: 20 }]}
-          onPress={() => router.push("/Saved")}
-        >
-          <Text style={styles.buttonText}>Go to Next Screen</Text>
-        </TouchableOpacity>
+        {/* DEAL SECTION */}
+        <View style={styles.dealBox}>
+          <Text style={styles.dealTitle}>Deal of the Day</Text>
+          <Text style={styles.dealText}>Get "Deep Work" at just ₹199 today</Text>
+
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Grab Deal</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* FOOTER */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>Bookmart © 2026</Text>
+        </View>
 
       </ScrollView>
     </View>
@@ -217,7 +260,6 @@ const styles = StyleSheet.create({
 
   catRow: {
     marginHorizontal: 15,
-    marginTop: 12,
   },
 
   catChip: {
@@ -251,5 +293,81 @@ const styles = StyleSheet.create({
     backgroundColor: "#E5E7EB",
     borderRadius: 12,
     marginBottom: 10,
+  },
+
+  hero: {
+    backgroundColor: COLORS.primary,
+    margin: 16,
+    borderRadius: 20,
+    padding: 20,
+  },
+
+  heroTitle: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "700",
+  },
+
+  heroSub: {
+    color: "#FECACA",
+    marginTop: 6,
+  },
+
+  heroBtn: {
+    backgroundColor: "white",
+    marginTop: 14,
+    padding: 10,
+    borderRadius: 12,
+    alignSelf: "flex-start",
+  },
+
+  heroBtnText: {
+    color: COLORS.primary,
+    fontWeight: "700",
+  },
+
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    marginLeft: 16,
+    color: COLORS.accent,
+    marginBottom: 10,
+  },
+
+  featureCard: {
+    backgroundColor: "white",
+    width: 140,
+    marginRight: 10,
+    padding: 10,
+    borderRadius: 16,
+    elevation: 2,
+    marginBottom: 10,
+  },
+
+  dealBox: {
+    backgroundColor: COLORS.accent,
+    margin: 16,
+    padding: 20,
+    borderRadius: 16,
+  },
+
+  dealTitle: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+
+  dealText: {
+    color: "#FEE2E2",
+    marginVertical: 6,
+  },
+
+  footer: {
+    padding: 20,
+    alignItems: "center",
+  },
+
+  footerText: {
+    color: "#6B7280",
   },
 });

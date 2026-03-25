@@ -117,9 +117,9 @@ import { ScrollView, TextInput } from "react-native";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const COLORS = {
-  primary: "#30E6C7",
+  primary: "#00B8B8",
+  accent: "#008080",
   background: "#F7F9F6",
-  accent: "#0F766E",
 };
 
 export default function ProductScreen() {

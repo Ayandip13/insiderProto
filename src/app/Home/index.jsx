@@ -1,43 +1,255 @@
-import { View, Text, StatusBar } from "react-native";
-import React, { useEffect, useState } from "react";
-import CategoryList from "../../components/CategoryList.jsx";
-import Cards from "../../components/Cards.jsx";
-import Header from "../../components/Header.jsx";
-import Color from "../../components/constants/Color.js";
+// import { View, Text, StatusBar } from "react-native";
+// import React, { useEffect, useState } from "react";
+// import CategoryList from "../../components/CategoryList.jsx";
+// import Cards from "../../components/Cards.jsx";
+// import Header from "../../components/Header.jsx";
+// import Color from "../../components/constants/Color.js";
 
-const HomePage = () => {
-  const [active, setActive] = useState({ id: 1, name: "Latest" });
-  const [newsData, setNewsData] = useState([]);
-  const API_KEY = "f7e2bafc620c48abb4b8b8502c5c9513";
+// const HomePage = () => {
+//   const [active, setActive] = useState({ id: 1, name: "Latest" });
+//   const [newsData, setNewsData] = useState([]);
+//   const API_KEY = "f7e2bafc620c48abb4b8b8502c5c9513";
 
-  const searchString = active ? active.name : "all";
+//   const searchString = active ? active.name : "all";
 
-  const getData = async () => {
-    try {
-      const resp = await fetch(
-        `https://newsapi.org/v2/everything?q=${searchString}&apiKey=${API_KEY}`
-      );
-      const data = await resp.json();
-      // console.log(data);
-      setNewsData(data.articles);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+//   const getData = async () => {
+//     try {
+//       const resp = await fetch(
+//         `https://newsapi.org/v2/everything?q=${searchString}&apiKey=${API_KEY}`
+//       );
+//       const data = await resp.json();
+//       // console.log(data);
+//       setNewsData(data.articles);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 
-  useEffect(() => {
-    if (active) {
-      getData();
-    }
-  }, [active]);
+//   useEffect(() => {
+//     if (active) {
+//       getData();
+//     }
+//   }, [active]);
 
-  return (
-    <View style={{ backgroundColor: Color.light, flex: 1 }}>
-      <Header />
-      <CategoryList active={active} setActive={setActive} />
-      <Cards activeCategory={newsData} />
-    </View>
-  );
+//   return (
+//     <View style={{ backgroundColor: Color.light, flex: 1 }}>
+//       <Header />
+//       <CategoryList active={active} setActive={setActive} />
+//       <Cards activeCategory={newsData} />
+//     </View>
+//   );
+// };
+
+// export default HomePage;
+
+import { StatusBar } from "expo-status-bar";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView } from "react-native";
+import { useRouter } from "expo-router";
+
+const COLORS = {
+  primary: "#2ED3B7",
+  background: "#F7F9F6",
+  accent: "#0F766E",
+
+  // primary: "#A78BFA",
+  // background: "#FAFAFF",
+  // accent: "#5B21B6",
+
+  // primary: "#38BDF8",
+  // background: "#F9FBFF",
+  // accent: "#1E40AF",
+
+  // primary: "#FB7185",
+  // background: "#F5F5F5",
+  // accent: "#BE123C",
+
+  // primary: "#6B4E3D",
+  // background: "#FAF3E8",
+  // accent: "#2F6B4F",
 };
 
-export default HomePage;
+const books = [
+  { id: "1", title: "Atomic Habits", price: "₹399" },
+  { id: "2", title: "Rich Dad Poor Dad", price: "₹299" },
+  { id: "3", title: "Ikigai", price: "₹249" },
+  { id: "4", title: "Deep Work", price: "₹349" },
+];
+
+const categories = ["Fiction", "Self Help", "Comics", "Study", "Used Books"];
+
+export default function App() {
+  const router = useRouter();
+
+  return (
+    <View style={styles.container}>
+      <StatusBar style="light" />
+
+      {/* HEADER */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Bookmart 📚</Text>
+        <Text style={styles.headerSub}>Fresh reads every day</Text>
+
+        <TextInput
+          placeholder="Search books..."
+          placeholderTextColor="#666"
+          style={styles.search}
+        />
+      </View>
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+
+        {/* CATEGORIES */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.catRow}>
+          {categories.map((cat) => (
+            <View key={cat} style={styles.catChip}>
+              <Text style={styles.catText}>{cat}</Text>
+            </View>
+          ))}
+        </ScrollView>
+
+        {/* PROMO */}
+        <View style={styles.promo}>
+          <Text style={styles.promoText}>🔥 Flat 30% off on Bestsellers</Text>
+        </View>
+
+        {/* PRODUCTS */}
+        <FlatList
+          data={books}
+          numColumns={2}
+          scrollEnabled={false}
+          contentContainerStyle={styles.list}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <View style={styles.fakeImage} />
+
+              <Text style={styles.bookTitle}>{item.title}</Text>
+              <Text style={styles.price}>{item.price}</Text>
+
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Add to Cart</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
+
+        <TouchableOpacity
+          style={[styles.button, { margin: 20 }]}
+          onPress={() => router.push("/Saved")}
+        >
+          <Text style={styles.buttonText}>Go to Next Screen</Text>
+        </TouchableOpacity>
+
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.background,
+  },
+
+  header: {
+    backgroundColor: COLORS.accent,
+    padding: 20,
+    paddingTop: 55,
+    borderBottomLeftRadius: 22,
+    borderBottomRightRadius: 22,
+  },
+
+  headerTitle: {
+    color: "white",
+    fontSize: 26,
+    fontWeight: "700",
+  },
+
+  headerSub: {
+    color: "#D1FAF5",
+    marginTop: 4,
+  },
+
+  list: {
+    padding: 10,
+  },
+
+  card: {
+    backgroundColor: "white",
+    flex: 1,
+    margin: 4,
+    padding: 10,
+    borderRadius: 16,
+    elevation: 3,
+  },
+
+  bookTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: COLORS.accent,
+  },
+
+  price: {
+    marginVertical: 6,
+    fontSize: 15,
+    fontWeight: "700",
+  },
+
+  button: {
+    backgroundColor: COLORS.primary,
+    padding: 10,
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: 8,
+  },
+
+  buttonText: {
+    color: COLORS.background,
+    fontWeight: "700",
+  },
+
+  search: {
+    backgroundColor: COLORS.background,
+    marginTop: 14,
+    padding: 12,
+    borderRadius: 14,
+  },
+
+  catRow: {
+    marginHorizontal: 15,
+    marginTop: 12,
+  },
+
+  catChip: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+
+  catText: {
+    color: COLORS.background,
+    fontWeight: "600",
+  },
+
+  promo: {
+    backgroundColor: COLORS.accent,
+    margin: 16,
+    padding: 16,
+    borderRadius: 16,
+  },
+
+  promoText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+
+  fakeImage: {
+    height: 100,
+    backgroundColor: "#E5E7EB",
+    borderRadius: 12,
+    marginBottom: 10,
+  },
+});

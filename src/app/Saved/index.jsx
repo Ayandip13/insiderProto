@@ -140,8 +140,15 @@ export default function ProductScreen() {
 
       <ScrollView style={styles.container}>
         {/* IMAGE PLACEHOLDER */}
-        <View style={styles.imageBox}>
-          <Text style={{ color: "#888" }}>Book Cover</Text>
+        {/* IMAGE + BADGE */}
+        <View style={styles.imageWrapper}>
+          <View style={styles.imageBox}>
+            <Text style={{ color: "#888" }}>Book Cover</Text>
+          </View>
+
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>Bestseller</Text>
+          </View>
         </View>
 
         {/* TITLE + RATING */}
@@ -152,8 +159,15 @@ export default function ProductScreen() {
           <Text style={styles.review}>(12,430 reviews)</Text>
         </View>
 
+        {/* AUTHOR */}
+        <Text style={styles.author}>by James Clear</Text>
+
         {/* PRICE */}
-        <Text style={styles.price}>₹399</Text>
+        <View style={styles.priceRow}>
+          <Text style={styles.price}>₹399</Text>
+          <Text style={styles.oldPrice}>₹599</Text>
+          <Text style={styles.discount}>33% OFF</Text>
+        </View>
 
         {/* DELIVERY */}
         <View style={styles.deliveryBox}>
@@ -161,21 +175,71 @@ export default function ProductScreen() {
         </View>
 
         {/* DESCRIPTION */}
+        <Text style={styles.sectionTitle}>Description</Text>
         <Text style={styles.desc}>
-          Build good habits, break bad ones — simple and powerful.
+          Build good habits, break bad ones — simple and powerful system to improve your life every day.
         </Text>
 
         {/* QUANTITY */}
         <View style={styles.qtyRow}>
-          <TouchableOpacity onPress={() => { count > 0 && setCount(count - 1) }} style={styles.qtyBtn}><Text style={{ color: COLORS.background }}>-</Text></TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => count > 0 && setCount(count - 1)}
+            style={styles.qtyBtn}
+          >
+            <Text style={{ color: COLORS.background }}>-</Text>
+          </TouchableOpacity>
+
           <Text style={styles.qty}>{count}</Text>
-          <TouchableOpacity onPress={() => setCount(count + 1)} style={styles.qtyBtn}><Text style={{ color: COLORS.background }}>+</Text></TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => setCount(count + 1)}
+            style={styles.qtyBtn}
+          >
+            <Text style={{ color: COLORS.background }}>+</Text>
+          </TouchableOpacity>
         </View>
 
         {/* WISHLIST */}
         <TouchableOpacity style={styles.wishlist}>
           <Text style={{ color: COLORS.accent }}>♡ Add to Wishlist</Text>
         </TouchableOpacity>
+
+        {/* EXTRA INFO */}
+        <View style={styles.infoBox}>
+          <Text style={styles.infoText}>📦 Cash on Delivery Available</Text>
+          <Text style={styles.infoText}>🔁 7 Days Replacement</Text>
+          <Text style={styles.infoText}>🔒 Secure Payment</Text>
+        </View>
+
+        {/* REVIEWS */}
+        <Text style={styles.sectionTitle}>Top Reviews</Text>
+
+        <View style={styles.reviewCard}>
+          <Text style={styles.reviewUser}>Rahul</Text>
+          <Text style={styles.reviewText}>
+            This book literally changed my mindset. Must read!
+          </Text>
+        </View>
+
+        <View style={styles.reviewCard}>
+          <Text style={styles.reviewUser}>Ananya</Text>
+          <Text style={styles.reviewText}>
+            Very practical and easy to understand.
+          </Text>
+        </View>
+
+        {/* RELATED BOOKS */}
+        <Text style={styles.sectionTitle}>You may also like</Text>
+
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {[1, 2, 3].map((i) => (
+            <View key={i} style={styles.relatedCard}>
+              <View style={styles.fakeImage} />
+              <Text style={styles.bookTitle}>Book {i}</Text>
+              <Text style={styles.price}>₹299</Text>
+            </View>
+          ))}
+        </ScrollView>
       </ScrollView>
 
       {/* STICKY BOTTOM CTA */}
@@ -332,5 +396,88 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
     color: COLORS.background,
+  },
+  imageWrapper: {
+    position: "relative",
+  },
+
+  badge: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 10,
+  },
+
+  badgeText: {
+    color: "white",
+    fontSize: 12,
+    fontWeight: "700",
+  },
+
+  author: {
+    color: "#555",
+    marginTop: 4,
+  },
+
+  priceRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+
+  oldPrice: {
+    textDecorationLine: "line-through",
+    color: "#888",
+  },
+
+  discount: {
+    color: COLORS.primary,
+    fontWeight: "700",
+  },
+
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    marginTop: 20,
+    color: COLORS.accent,
+  },
+
+  infoBox: {
+    backgroundColor: "#E6FFFA",
+    padding: 14,
+    borderRadius: 14,
+    marginTop: 14,
+  },
+
+  infoText: {
+    color: COLORS.accent,
+    marginBottom: 4,
+  },
+
+  reviewCard: {
+    backgroundColor: "white",
+    padding: 12,
+    borderRadius: 14,
+    marginTop: 10,
+  },
+
+  reviewUser: {
+    fontWeight: "700",
+  },
+
+  reviewText: {
+    color: "#444",
+    marginTop: 4,
+  },
+
+  relatedCard: {
+    width: 120,
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 14,
+    marginRight: 10,
   },
 });

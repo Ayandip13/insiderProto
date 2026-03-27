@@ -61,6 +61,7 @@ const COLORS = {
   // background: "#FFFBEB"
 
   primary: "#00B8B8",
+  primary2: "#E6FFFA",
   accent: "#008080",
   background: "#F7F9F6",
 
@@ -137,7 +138,7 @@ export default function App() {
 
         {/* FEATURED BOOKS (HORIZONTAL) */}
         <Text style={styles.sectionTitle}>Featured</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: 10 }}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: 15 }}>
           {books.map((item) => (
             <View key={item.id} style={styles.featureCard}>
               <Image source={{ uri: item.urlToImage }} resizeMode="cover" style={{ height: 100, width: 100, borderRadius: 10 }} />
@@ -209,13 +210,13 @@ const styles = StyleSheet.create({
   },
 
   headerTitle: {
-    color: "white",
+    color: COLORS.primary2,
     fontSize: 26,
     fontWeight: "700",
   },
 
   headerSub: {
-    color: "#D1FAF5",
+    color: COLORS.primary2,
     marginTop: 4,
   },
 
@@ -224,7 +225,7 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     flex: 1,
     margin: 4,
     padding: 10,
@@ -289,7 +290,7 @@ const styles = StyleSheet.create({
   },
 
   promoText: {
-    color: "white",
+    color: "#E6FFFA",
     fontSize: 16,
     fontWeight: "700",
   },
@@ -309,18 +310,18 @@ const styles = StyleSheet.create({
   },
 
   heroTitle: {
-    color: "white",
+    color: "#E6FFFA",
     fontSize: 20,
     fontWeight: "700",
   },
 
   heroSub: {
-    color: "#FECACA",
+    color: "#E6FFFA",
     marginTop: 6,
   },
 
   heroBtn: {
-    backgroundColor: "white",
+    backgroundColor: "#E6FFFA",
     marginTop: 14,
     padding: 10,
     borderRadius: 12,
@@ -340,7 +341,7 @@ const styles = StyleSheet.create({
   },
 
   featureCard: {
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     width: 140,
     marginRight: 10,
     padding: 10,
@@ -357,13 +358,13 @@ const styles = StyleSheet.create({
   },
 
   dealTitle: {
-    color: "white",
+    color: "#E6FFFA",
     fontSize: 18,
     fontWeight: "700",
   },
 
   dealText: {
-    color: "#FEE2E2",
+    color: "#E6FFFA",
     marginVertical: 6,
   },
 

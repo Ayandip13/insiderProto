@@ -45,6 +45,7 @@
 import { StatusBar } from "expo-status-bar";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
+import { Image } from "react-native";
 
 const COLORS = {
   // primary: "#DC2626",
@@ -81,10 +82,10 @@ const COLORS = {
 };
 
 const books = [
-  { id: "1", title: "Atomic Habits", price: "₹399" },
-  { id: "2", title: "Rich Dad Poor Dad", price: "₹299" },
-  { id: "3", title: "Ikigai", price: "₹249" },
-  { id: "4", title: "Deep Work", price: "₹349" },
+  { id: "1", title: "Atomic Habits", price: "₹399", urlToImage: "https://www.oskareggert.com/content/images/size/w2000/2024/02/image_67203329.JPG" },
+  { id: "2", title: "Rich Dad Poor Dad", price: "₹299", urlToImage: "https://cdn.penguin.co.in/wp-content/uploads/2023/12/9781612681139-1-scaled.jpg" },
+  { id: "3", title: "Ikigai", price: "₹249", urlToImage: "https://corporategiftsbyconfetti.in/cdn/shop/files/71YPkVyl_DL._SL1200.jpg?v=1698923673&width=2048" },
+  { id: "4", title: "Deep Work", price: "₹349", urlToImage: "https://tldv.io/wp-content/uploads/2021/06/Deep-Work-by-Cal-Newport-Book.jpg" },
 ];
 
 const categories = ["Fiction", "Self Help", "Comics", "Study", "Used Books"];
@@ -139,7 +140,7 @@ export default function App() {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: 10 }}>
           {books.map((item) => (
             <View key={item.id} style={styles.featureCard}>
-              <View style={styles.fakeImage} />
+              <Image source={{ uri: item.urlToImage }} resizeMode="cover" style={{ height: 100, width: 100, borderRadius: 10 }} />
               <Text style={styles.bookTitle}>{item.title}</Text>
               <Text style={styles.price}>{item.price}</Text>
             </View>
@@ -156,16 +157,21 @@ export default function App() {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.card}>
-              <View style={styles.fakeImage} />
-
+              <Image source={{ uri: item.urlToImage }} resizeMode="cover" style={{ height: 100, width: 150, borderRadius: 10 }} />
               <Text style={styles.bookTitle}>{item.title}</Text>
               <Text style={styles.price}>{item.price}</Text>
 
-              <TouchableOpacity onPress={() => router.push("/Saved")} style={styles.button}>
+              <TouchableOpacity
+                onPress={() => router.push({
+                  pathname: "/Saved",
+                  params: { item: JSON.stringify(item) }
+                })}
+                style={styles.button}>
                 <Text style={styles.buttonText}>Add to Cart</Text>
               </TouchableOpacity>
             </View>
-          )}
+          )
+          }
         />
 
         {/* DEAL SECTION */}
@@ -183,8 +189,8 @@ export default function App() {
           <Text style={styles.footerText}>Bookmart © 2026</Text>
         </View>
 
-      </ScrollView>
-    </View>
+      </ScrollView >
+    </View >
   );
 }
 
@@ -331,7 +337,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginLeft: 16,
     color: COLORS.accent,
-    marginBottom: 10,
   },
 
   featureCard: {
@@ -346,7 +351,7 @@ const styles = StyleSheet.create({
 
   dealBox: {
     backgroundColor: COLORS.accent,
-    margin: 16,
+    margin: 12,
     padding: 20,
     borderRadius: 16,
   },

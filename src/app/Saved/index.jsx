@@ -113,8 +113,8 @@
 
 
 import { useState } from "react";
-import { ScrollView, TextInput } from "react-native";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, TextInput, View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 
 const COLORS = {
   primary: "#00B8B8",
@@ -124,6 +124,12 @@ const COLORS = {
 
 export default function ProductScreen() {
   const [count, setCount] = useState(0);
+  const { item: itemString } = useLocalSearchParams();
+
+  // Parse the stringified item object
+  const item = itemString ? JSON.parse(itemString) : {};
+  console.log(item);
+
   return (
     <>
       {/* HEADER */}
@@ -139,20 +145,18 @@ export default function ProductScreen() {
       </View>
 
       <ScrollView style={styles.container}>
-        {/* IMAGE PLACEHOLDER */}
-        {/* IMAGE + BADGE */}
         <View style={styles.imageWrapper}>
-          <View style={styles.imageBox}>
-            <Text style={{ color: "#888" }}>Book Cover</Text>
-          </View>
+          <Image
+            source={{ uri: item.urlToImage }}
+            style={styles.imageBox}
+          />
 
           <View style={styles.badge}>
             <Text style={styles.badgeText}>Bestseller</Text>
           </View>
         </View>
 
-        {/* TITLE + RATING */}
-        <Text style={styles.title}>Atomic Habits</Text>
+        <Text style={styles.title}>{item.title}</Text>
 
         <View style={styles.ratingRow}>
           <Text style={styles.rating}>⭐ 4.8</Text>
@@ -164,7 +168,7 @@ export default function ProductScreen() {
 
         {/* PRICE */}
         <View style={styles.priceRow}>
-          <Text style={styles.price}>₹399</Text>
+          <Text style={styles.price}>{item.price}</Text>
           <Text style={styles.oldPrice}>₹599</Text>
           <Text style={styles.discount}>33% OFF</Text>
         </View>
@@ -244,7 +248,7 @@ export default function ProductScreen() {
 
       {/* STICKY BOTTOM CTA */}
       <View style={styles.bottomBar}>
-        <Text style={styles.bottomPrice}>₹399</Text>
+        <Text style={styles.bottomPrice}>{item.price}</Text>
         <TouchableOpacity style={styles.buyBtn}>
           <Text style={styles.buyText}>Buy Now</Text>
         </TouchableOpacity>

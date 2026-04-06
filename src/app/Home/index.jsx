@@ -60,9 +60,9 @@ const COLORS = {
   // accent: "#B45309",
   // background: "#FFFBEB"
 
-  primary: "#00B8B8",
+  primary: "#29c0a7ff",
   primary2: "#E6FFFA",
-  accent: "#008080",
+  accent: "#0F766E",
   background: "#F7F9F6",
 
   // primary: "#A78BFA",
@@ -111,7 +111,6 @@ export default function App() {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-
         {/* HERO BANNER */}
         <View style={styles.hero}>
           <Text style={styles.heroTitle}>Discover Your Next Book</Text>

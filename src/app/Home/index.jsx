@@ -49,14 +49,17 @@ import { Image } from "react-native";
 
 const COLORS = {
   // primary: "#DC2626",
+  // primary2: "#FEF2F2",
   // accent: "#991B1B",
   // background: "#FEF2F2"
 
   // primary: "#EAB308",
+  // primary2: "#FFFBEB",
   // accent: "#A16207",
   // background: "#FEFCE8"
 
   // primary: "#F59E0B",
+  // primary2: "#FFFBEB",
   // accent: "#B45309",
   // background: "#FFFBEB"
 
@@ -66,18 +69,22 @@ const COLORS = {
   background: "#F7F9F6",
 
   // primary: "#A78BFA",
+  // primary2: "#FFFBEB",
   // background: "#FAFAFF",
   // accent: "#5B21B6",
 
   // primary: "#38BDF8",
+  // primary2: "#F9FBFF",
   // background: "#F9FBFF",
   // accent: "#1E40AF",
 
   // primary: "#FB7185",
+  // primary2: "#F5F5F5",
   // background: "#F5F5F5",
   // accent: "#BE123C",
 
   // primary: "#6B4E3D",
+  // primary2: "#FAF3E8",
   // background: "#FAF3E8",
   // accent: "#2F6B4F",
 };

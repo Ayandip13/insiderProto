@@ -83,10 +83,38 @@ const COLORS = {
 };
 
 const books = [
-  { id: "1", title: "Atomic Habits", price: "₹399", urlToImage: "https://www.oskareggert.com/content/images/size/w2000/2024/02/image_67203329.JPG" },
-  { id: "2", title: "Rich Dad Poor Dad", price: "₹299", urlToImage: "https://cdn.penguin.co.in/wp-content/uploads/2023/12/9781612681139-1-scaled.jpg" },
-  { id: "3", title: "Ikigai", price: "₹249", urlToImage: "https://corporategiftsbyconfetti.in/cdn/shop/files/71YPkVyl_DL._SL1200.jpg?v=1698923673&width=2048" },
-  { id: "4", title: "Deep Work", price: "₹349", urlToImage: "https://tldv.io/wp-content/uploads/2021/06/Deep-Work-by-Cal-Newport-Book.jpg" },
+  {
+    id: "1",
+    title: "Atomic Habits",
+    price: "₹399",
+    urlToImage: "https://www.oskareggert.com/content/images/size/w2000/2024/02/image_67203329.JPG",
+    author: "James Clear",
+    decs: "Let's build a practical guide to building good habits and breaking bad ones."
+  },
+  {
+    id: "2",
+    title: "Rich Dad Poor Dad",
+    price: "₹299",
+    urlToImage: "https://cdn.penguin.co.in/wp-content/uploads/2023/12/9781612681139-1-scaled.jpg",
+    author: "Robert Kiyosaki",
+    decs: "A practical guide to building good habits and breaking bad ones."
+  },
+  {
+    id: "3",
+    title: "Ikigai",
+    price: "₹249",
+    urlToImage: "https://corporategiftsbyconfetti.in/cdn/shop/files/71YPkVyl_DL._SL1200.jpg?v=1698923673&width=2048",
+    author: "Héctor García",
+    decs: "A practical guide to building good habits and breaking bad ones."
+  },
+  {
+    id: "4",
+    title: "Deep Work",
+    price: "₹349",
+    urlToImage: "https://tldv.io/wp-content/uploads/2021/06/Deep-Work-by-Cal-Newport-Book.jpg",
+    author: "Cal Newport",
+    decs: "A practical guide to building good habits and breaking bad ones."
+  },
 ];
 
 const categories = ["Fiction", "Self Help", "Comics", "Study", "Used Books"];
@@ -173,7 +201,57 @@ export default function App() {
           )
           }
         />
+        {/* FROM YOUR COLLEGE */}
+        <Text style={styles.sectionTitle}>From Your College</Text>
 
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 10 }}
+        >
+          {books.map((item) => (
+            <TouchableOpacity key={item.id} style={styles.collegeCard} activeOpacity={0.85}>
+
+              {/* IMAGE */}
+              <Image source={{ uri: item.urlToImage }} style={styles.collegeImage} />
+
+              {/* BADGE */}
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>Campus</Text>
+              </View>
+
+              {/* CONTENT */}
+              <View style={styles.collegeContent}>
+                <View>
+                  <Text numberOfLines={2} style={styles.collegeTitle}>
+                    {item.title}
+                  </Text>
+                  <View style={{ height: 0.7, backgroundColor: "green", width: "70%", marginTop: 3 }} />
+                </View>
+
+                <Text style={styles.author}>{item.author}</Text>
+
+                <Text style={styles.decs} numberOfLines={2}>{item.decs}</Text>
+
+                <View style={styles.sellerRow}>
+                  <View style={styles.avatar}>
+                    <Text style={styles.avatarText}>R</Text>
+                  </View>
+
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.sellerName}>Rahul D.</Text>
+                  </View>
+
+                  {/* QUICK ACTION */}
+                  <TouchableOpacity style={styles.quickBtn}>
+                    <Text style={styles.quickBtnText}>+</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
         {/* DEAL SECTION */}
         <View style={styles.dealBox}>
           <Text style={styles.dealTitle}>Deal of the Day</Text>
@@ -235,13 +313,7 @@ const styles = StyleSheet.create({
   bookTitle: {
     fontSize: 16,
     fontWeight: "600",
-    color: COLORS.accent,
-  },
-
-  price: {
-    marginVertical: 6,
-    fontSize: 15,
-    fontWeight: "700",
+    color: "#000",
   },
 
   button: {
@@ -374,5 +446,118 @@ const styles = StyleSheet.create({
 
   footerText: {
     color: "#6B7280",
+  },
+
+
+  collegeCard: {
+    flexDirection: "row",
+    width: 300,
+    backgroundColor: "#fff",
+    borderRadius: 18,
+    padding: 15,
+    marginRight: 14,
+
+    // depth
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
+  },
+
+  collegeImage: {
+    width: 85,
+    height: 115,
+    borderRadius: 12,
+  },
+
+  badge: {
+    position: "absolute",
+    top: 8,
+    left: 8,
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+  },
+
+  badgeText: {
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "700",
+  },
+
+  collegeContent: {
+    flex: 1,
+    marginLeft: 12,
+    justifyContent: "space-between",
+  },
+
+  collegeTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: "#111",
+  },
+
+  price: {
+    fontSize: 16,
+    fontWeight: "800",
+    color: "#111",
+  },
+
+  author: {
+    fontSize: 13,
+    color: "#555",
+  },
+
+  decs: {
+    fontSize: 12,
+    color: "#6B7280",
+  },
+
+  sellerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  avatar: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 8,
+  },
+
+  avatarText: {
+    color: "#fff",
+    fontWeight: "700",
+    fontSize: 12,
+  },
+
+  sellerName: {
+    fontSize: 12,
+    fontWeight: "600",
+  },
+
+  collegeTag: {
+    fontSize: 11,
+    color: "#6B7280",
+  },
+
+  quickBtn: {
+    backgroundColor: COLORS.primary2,
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  quickBtnText: {
+    color: COLORS.primary,
+    fontSize: 16,
+    fontWeight: "700",
   },
 });

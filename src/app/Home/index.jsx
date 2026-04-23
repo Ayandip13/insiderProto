@@ -42,177 +42,188 @@
 
 // export default HomePage;
 
-import React, { useState, useEffect } from "react";
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  FlatList, 
-  ScrollView, 
-  StatusBar, 
-  Dimensions 
+import React from "react";
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  Dimensions,
+  TouchableOpacity,
 } from "react-native";
-import { useRouter } from "expo-router";
-import PremiumHeader from "../../components/PremiumHeader";
-import CategoryBar from "../../components/CategoryBar";
-import BookCard from "../../components/BookCard";
-import { THEMES } from "../../theme/themes";
+import { Ionicons } from "@expo/vector-icons";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
+const CARD_WIDTH = (width - 48) / 2;
 
-const ALL_BOOKS = [
+const books = [
   {
     id: "1",
-    title: "Atomic Habits",
-    price: "₹399",
-    urlToImage: "https://www.oskareggert.com/content/images/size/w2000/2024/02/image_67203329.JPG",
-    author: "James Clear",
-    category: "Study",
-    condition: "New"
+    title: "The War of the Worlds",
+    image: "https://covers.openlibrary.org/b/id/7222246-L.jpg",
   },
   {
     id: "2",
-    title: "Rich Dad Poor Dad",
-    price: "₹299",
-    urlToImage: "https://cdn.penguin.co.in/wp-content/uploads/2023/12/9781612681139-1-scaled.jpg",
-    author: "Robert Kiyosaki",
-    category: "Study",
-    condition: "Used"
+    title: "Project Hail Mary",
+    image: "https://covers.openlibrary.org/b/id/10594765-L.jpg",
   },
   {
     id: "3",
-    title: "The Silent Patient",
-    price: "₹249",
-    urlToImage: "https://m.media-amazon.com/images/I/81JJPDYEP-L._AC_UF1000,1000_QL80_.jpg",
-    author: "Alex Michaelides",
-    category: "Horror",
-    condition: "New"
+    title: "1984",
+    image: "https://covers.openlibrary.org/b/id/7222246-L.jpg",
   },
   {
     id: "4",
-    title: "The Guest List",
-    price: "₹349",
-    urlToImage: "https://m.media-amazon.com/images/I/81I6xSAtZ3L._AC_UF1000,1000_QL80_.jpg",
-    author: "Lucy Foley",
-    category: "Horror",
-    condition: "New"
+    title: "The Martian Chronicles",
+    image: "https://covers.openlibrary.org/b/id/11153216-L.jpg",
   },
   {
     id: "5",
-    title: "Me Before You",
-    price: "₹199",
-    urlToImage: "https://m.media-amazon.com/images/I/81mXSp8RcrL._AC_UF1000,1000_QL80_.jpg",
-    author: "Jojo Moyes",
-    category: "Romance",
-    condition: "New"
+    title: "The War of the Worlds",
+    image: "https://covers.openlibrary.org/b/id/7222246-L.jpg",
   },
   {
     id: "6",
-    title: "The Hobbit",
-    price: "₹450",
-    urlToImage: "https://m.media-amazon.com/images/I/710+HcoP38L._AC_UF1000,1000_QL80_.jpg",
-    author: "J.R.R. Tolkien",
-    category: "Fantasy",
-    condition: "New"
+    title: "Project Hail Mary",
+    image: "https://covers.openlibrary.org/b/id/10594765-L.jpg",
   },
   {
     id: "7",
-    title: "Born a Crime",
-    price: "₹275",
-    urlToImage: "https://m.media-amazon.com/images/I/81S6eS7jMFL._AC_UF1000,1000_QL80_.jpg",
-    author: "Trevor Noah",
-    category: "Comedy",
-    condition: "Used"
+    title: "1984",
+    image: "https://covers.openlibrary.org/b/id/7222246-L.jpg",
   },
   {
     id: "8",
-    title: "Harry Potter",
-    price: "₹599",
-    urlToImage: "https://m.media-amazon.com/images/I/71X0Z787oLL._AC_UF1000,1000_QL80_.jpg",
-    author: "J.K. Rowling",
-    category: "Fantasy",
-    condition: "New"
-  }
+    title: "The Martian Chronicles",
+    image: "https://covers.openlibrary.org/b/id/11153216-L.jpg",
+  },
 ];
 
-const CATEGORIES = ["Fiction", "Romance", "Horror", "Comedy", "Study", "Fantasy"];
+const listData = [
+  { id: "header", type: "header" },
+  ...books,
+];
 
-export default function App() {
-  const [activeCategory, setActiveCategory] = useState("Fiction");
-  const [filteredBooks, setFilteredBooks] = useState(ALL_BOOKS);
-  const router = useRouter();
+export default function SciFiScreen() {
+  const renderItem = ({ item, index }) => {
+    // 👉 HEADER ITEM
+    if (item.type === "header") {
+      return (
+        <View
+          style={{
+            width: CARD_WIDTH,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 32,
+              fontWeight: "800",
+            }}
+          >
+            Science{"\n"}Fiction
+          </Text>
 
-  const theme = THEMES[activeCategory] || THEMES.Fiction;
-
-  useEffect(() => {
-    if (activeCategory === "Fiction") {
-      setFilteredBooks(ALL_BOOKS);
-    } else {
-      setFilteredBooks(ALL_BOOKS.filter(b => b.category === activeCategory));
+          <Text
+            style={{
+              color: "#666",
+              marginTop: 8,
+            }}
+          >
+            The Art of the Possible
+          </Text>
+        </View>
+      );
     }
-  }, [activeCategory]);
+
+    // 👉 BOOK CARD
+    return (
+      <View
+        style={{
+          width: CARD_WIDTH,
+          backgroundColor: "#fff",
+          borderRadius: 20,
+          padding: 12,
+          marginBottom: 20,
+
+          // 🔥 important tweak
+          marginTop: index % 2 !== 0 ? 30 : 0,
+
+          shadowColor: "#000",
+          shadowOpacity: 0.08,
+          shadowRadius: 10,
+          elevation: 4,
+        }}
+      >
+        <Text
+          style={{
+            fontWeight: "600",
+            marginBottom: 10,
+          }}
+        >
+          {item.title}
+        </Text>
+
+        <Image
+          source={{ uri: item.image }}
+          style={{
+            width: "100%",
+            height: 160,
+            borderRadius: 12,
+          }}
+        />
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: 10,
+          }}
+        >
+          <Text
+            style={{
+              color: "#0a8f83",
+              fontWeight: "600",
+            }}
+          >
+            ₹ 290
+          </Text>
+
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#0a8f83",
+              borderRadius: 20,
+              padding: 6,
+            }}
+          >
+            <Ionicons name="add" size={18} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.bg }]}>
-      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
-      
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#f4f4f4",
+        padding: 16,
+      }}
+    >
+
       <FlatList
-        data={filteredBooks}
+        data={listData}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        contentContainerStyle={styles.listContent}
-        ListHeaderComponent={
-          <>
-            <PremiumHeader theme={theme} />
-            <CategoryBar 
-              categories={CATEGORIES} 
-              activeCategory={activeCategory} 
-              onSelect={setActiveCategory}
-              theme={theme}
-            />
-            <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>
-                {activeCategory === "Fiction" ? "Popular Books" : `${activeCategory} Reads`}
-              </Text>
-              <Text style={styles.sectionCount}>{filteredBooks.length} available</Text>
-            </View>
-          </>
-        }
-        renderItem={({ item }) => <BookCard item={item} />}
+        columnWrapperStyle={{
+          justifyContent: "space-between",
+        }}
+        renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  listContent: {
-    paddingBottom: 30,
-  },
-  columnWrapper: {
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    marginBottom: 15,
-  },
-  sectionTitle: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: '#111',
-  },
-  sectionCount: {
-    fontSize: 14,
-    color: '#666',
-    fontWeight: '500',
-  }
-});
 
